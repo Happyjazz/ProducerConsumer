@@ -9,20 +9,23 @@ namespace ProducerConsumer
 {
     class Consumer
     {
-        private int _max;
         private BoundedBuffer _buffer;
-        public Consumer(BoundedBuffer buffer, int ExpectedAmount)
+        public Consumer(BoundedBuffer buffer)
         {
             _buffer = buffer;
-            _max = ExpectedAmount;
         }
         public void Run()
         {
-            for (int i = 0; i < _max; i++)
+            for (;;)
             {
                 int temp = _buffer.Take();
-                
+
+                if (temp == (int)_buffer.LastObject)
+                {
+                    break;
+                }
             }
+            
         }
     }
 }

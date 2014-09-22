@@ -21,7 +21,12 @@ namespace ProducerConsumer
         {
             for (int i = 0; i < _max; i++)
             {
+                if (i == _max - 1)
+                {
+                    _buffer.LastObject = i;
+                }
                 _buffer.Put(i);
+
             }
         }
     }

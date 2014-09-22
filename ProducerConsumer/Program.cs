@@ -13,11 +13,11 @@ namespace ProducerConsumer
             BoundedBuffer buf = new BoundedBuffer(4);
 
             Producer prod = new Producer(buf, 100);
-            Consumer con = new Consumer(buf, 100);
+            Consumer con = new Consumer(buf);
 
             Parallel.Invoke(prod.Run, con.Run);
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }

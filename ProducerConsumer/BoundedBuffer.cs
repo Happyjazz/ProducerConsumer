@@ -11,11 +11,19 @@ namespace ProducerConsumer
     {
         private Queue<int> _queue;
         private int _bufferSize;
+        private object _lastObject;
+
+        public object LastObject
+        {
+            get { return _lastObject; }
+            set { _lastObject = value; }
+        }
 
         public BoundedBuffer(int bufferSize)
         {
             _queue = new Queue<int>();
             _bufferSize = bufferSize;
+            _lastObject = (int) -1;
         }
         public bool IsFull()
         {

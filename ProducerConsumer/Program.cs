@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace ProducerConsumer
     {
         static void Main(string[] args)
         {
-            BoundedBuffer buf = new BoundedBuffer(4);
+            BlockingCollection<int> buf = new BlockingCollection<int>(5);
 
             Producer prod = new Producer(buf, 100);
             Consumer con = new Consumer(buf);

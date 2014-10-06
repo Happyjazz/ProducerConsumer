@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,23 +12,28 @@ namespace ProducerConsumer
 {
     class Consumer
     {
-        private BoundedBuffer _buffer;
-        public Consumer(BoundedBuffer buffer)
+        private BlockingCollection<int> _buffer;
+        public Consumer(BlockingCollection<int> buffer)
         {
             _buffer = buffer;
         }
         public void Run()
         {
-            for (;;)
+            while (!_buffer.IsCompleted)
             {
-                int temp = _buffer.Take();
-
-                if (temp == (int)_buffer.LastObject)
+                int temp = -1;
+                try
                 {
-                    break;
+                    temp = _buffer.Take();
+                }
+                catch (InvalidOperationException) { }
+
+                if (temp != null)
+                {
+                    Console.WriteLine("Took {0} from buffer.",temp);
                 }
             }
-            
+            Console.WriteLine("Buffer empty.");
         }
     }
 }

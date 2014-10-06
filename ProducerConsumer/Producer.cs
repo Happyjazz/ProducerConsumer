@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ namespace ProducerConsumer
 {
     class Producer
     {
-        private BoundedBuffer _buffer;
+        private BlockingCollection<int> _buffer;
         private int _max;
 
-        public Producer(BoundedBuffer buffer, int howManyToProduce)
+        public Producer(BlockingCollection<int> buffer, int howManyToProduce)
         {
             _buffer = buffer;
             _max = howManyToProduce;
@@ -21,12 +22,13 @@ namespace ProducerConsumer
         {
             for (int i = 0; i < _max; i++)
             {
-                if (i == _max - 1)
-                {
-                    _buffer.LastObject = i;
-                }
-                _buffer.Put(i);
+                _buffer.Add(i);
+                Console.WriteLine("Added {0} to buffer.", i);
 
+                if (i == _max)
+                {
+                    _buffer.CompleteAdding();
+                }
             }
         }
     }

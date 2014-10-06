@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BoundedBuffer.cs" />
     <Compile Include="Consumer.cs" />
     <Compile Include="Producer.cs" />
     <Compile Include="Program.cs" />
